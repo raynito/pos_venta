@@ -1,20 +1,87 @@
-# pos_venta
+# Sistema de Punto de Venta (USD ⇄ BsD)
 
-Sistema de Punto de Venta ($USD => BsD)con los siguentes Modulos:
+Un sistema completo de punto de venta con conversión automática de moneda entre Dólares Americanos (USD) y Bolívares Digitales (BsD).
 
-1. Compras
-    1.1. Nueva Compra
-    1.2. Historial de Compras
-2. Ventas
-    2.1. Nueva Venta
-    2.2. Historial de Ventas
-3. Clientes (Creacion, Modificacion, Activacion y Desactivacion)
-4. Categorias (Creacion, Modificacion, Activacion y Desactivacion)
-5. Medidas (Creacion, Modificacion, Activacion y Desactivacion)
-6. Productos (Creacion, Modificacion, Activacion y Desactivacion), incluye carga de Imagenes
-7. Administracion
-    7.1. Usuarios (Creacion, Modificacion, Activacion y Desactivacion)
-    7.2. Configuracion de la Empresa con Tasa del dia Configurable (Incorporada la funcionalidad de Obtener Tasa Autoimatica por API)
-8. Cajas
-    8.1. Cajas (Creacion, Modificacion, Activacion y Desactivacion)
-    8.2. Cierres de Caja
+## 📋 Módulos del Sistema
+
+### 1. 🛒 **Compras**
+- **1.1. Nueva Compra** - Registro de compras a proveedores
+- **1.2. Historial de Compras** - Consulta y gestión de compras realizadas
+
+### 2. 💰 **Ventas**
+- **2.1. Nueva Venta** - Proceso completo de venta al cliente
+- **2.2. Historial de Ventas** - Registro y seguimiento de ventas
+
+### 3. 👥 **Clientes**
+- Creación de nuevos clientes
+- Modificación de datos de clientes
+- Activación/Desactivación de clientes
+
+### 4. 📂 **Categorías**
+- Creación de categorías de productos
+- Modificación de categorías
+- Activación/Desactivación de categorías
+
+### 5. 📏 **Medidas**
+- Creación de unidades de medida
+- Modificación de medidas
+- Activación/Desactivación de medidas
+
+### 6. 📦 **Productos**
+- Creación de productos con información completa
+- Modificación de productos existentes
+- Activación/Desactivación de productos
+- **Carga de imágenes** para productos
+
+### 7. ⚙️ **Administración**
+- **7.1. Usuarios**
+  - Creación de usuarios del sistema
+  - Modificación de datos de usuario
+  - Activación/Desactivación de usuarios
+  - Gestión de permisos y roles
+  
+- **7.2. Configuración de la Empresa**
+  - Configuración general del negocio
+  - **Tasa del día configurable**
+  - **Obtener tasa automática por API** (funcionalidad incorporada)
+
+### 8. 🏦 **Cajas**
+- **8.1. Cajas**
+  - Creación de cajas registradoras
+  - Modificación de cajas
+  - Activación/Desactivación de cajas
+  
+- **8.2. Cierres de Caja**
+  - Apertura de caja con monto inicial
+  - Cierre de caja con arqueo automático
+  - Reportes de cierre diario
+
+## 🔧 Características Principales
+
+- **Conversión automática USD ⇄ BsD**
+- **API de tasas** para conversión automática
+- **Gestión de inventario** en tiempo real
+- **Reportes y estadísticas**
+- **Interfaz intuitiva** y responsiva
+- **Backup y recuperación** de datos
+
+## 💻 Tecnologías Utilizadas
+
+- **Backend:** PHP, MySQL
+- **Frontend:** HTML5, CSS3, JavaScript, Bootstrap
+- **Librerías:** jQuery, DataTables, SweetAlert2
+- **APIs:** Conversión de tasas de cambio
+
+## 📊 Funcionalidades Adicionales
+
+- **Control de stock** con alertas de inventario bajo
+- **Ventas por cliente** con historial detallado
+- **Arqueo de caja** con cálculos automáticos
+- **Permisos por usuario** para control de acceso
+- **Exportación de datos** a Excel/PDF
+
+## 🚀 Instalación
+
+1. Clonar el repositorio:
+```bash
+git clone https://github.com/raynito/pos_venta.git
