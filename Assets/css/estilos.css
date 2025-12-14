@@ -1,0 +1,278 @@
+input[type="checkbox"]{
+    position: relative;
+    width: 40px;
+    height: 20px;
+    -webkit-appearance: none;
+    background: rgb(255, 0, 0);
+    outline: none;
+    border-radius: 15px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,.5);
+}
+
+input:checked[type="checkbox"]{
+    background: rgb(0, 123, 255);
+}
+
+input[type="checkbox"]:before{
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    top: 0;
+    left: 0;
+    background: white;
+    transition: 0.5s;
+    
+}
+
+input:checked[type="checkbox"]:before{
+    left: 20px;
+}
+
+.pagina{
+    font-size: 40px;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+}
+ 
+hr{
+    height: 4px;
+    background: #005eea;
+    border: none;
+}
+ 
+.parrafo{
+    font-size: 16px;
+    font-weight: 300;
+    margin-top: 20px;
+}
+ 
+.content{
+    max-width: 500px;
+    background: #fff;
+    padding: 40px;
+    font-size: 22px;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 10px;
+    transition: all 300ms;
+    box-shadow:  6px 6px 12px #4d4c4c,
+             -6px -6px 12px #ffffff;
+}
+ 
+.content:hover{
+    transform: translate(-5px, -10px);
+    box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.40);
+}
+ 
+.tags{
+    position: relative;
+    padding: 5px 60px 5px 50px;
+    margin-left: -51px;
+    display: inline-block;
+    white-space: nowrap;
+    color: #fff;
+    font-weight: 100;
+    background-image: 
+        linear-gradient(45deg, #005eea, #005eea 32px, rgba(0,0,0,0) 32px),
+        linear-gradient(135deg, #005eea, #005eea 32px, rgba(0,0,0,0) 32px),
+        linear-gradient(135deg, #005eea, #005eea);
+    background-repeat: no-repeat;
+    background-position: 100% 100%, 100% 100%, -32px 100%;
+    background-size: 48px 100%, 48px 100%, 100% 100%;
+    cursor: default;
+}
+ 
+.tags:before{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: .25em solid transparent;
+    border-bottom-color: rgb(3, 0, 0);
+    border-right-color: rgb(3, 0, 0);
+    top: -11px;
+    left: 0;
+}
+
+/* Asegurar que el botón de imagen sea visible */
+#icon-image {
+    display: block !important;
+}
+
+/* Estilo para la imagen preview */
+#img-preview {
+    object-fit: contain;
+    border: 2px solid #dee2e6;
+    background-color: #f8f9fa;
+    padding: 5px;
+}
+
+/* Para transiciones suaves */
+#img-preview {
+    transition: all 0.3s ease;
+}
+
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-right-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.rate-updated {
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+    transition: all 0.3s ease;
+}
+
+.rate-error {
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+}
+
+.rate-info {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+.btn-group-custom {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.field-changed {
+    border-color: #0d6efd !important;
+    background-color: #f8f9fa !important;
+}
+
+.alert-auto-hide {
+    animation: fadeOut 1s forwards;
+    animation-delay: 1s;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
+
+@media (max-width: 768px) {
+    .btn-group-custom {
+        flex-direction: column;
+    }
+    
+    .btn-group-custom .btn {
+        width: 100%;
+    }
+}
+
+/* Reset completo para los iconos de DataTables */
+#tblProductos thead th.sorting:after,
+#tblProductos thead th.sorting_asc:after,
+#tblProductos thead th.sorting_desc:after {
+    display: none !important;
+    opacity: 0 !important;
+    content: '' !important;
+}
+
+/* Iconos de ordenamiento personalizados */
+#tblProductos thead th {
+    position: relative;
+    padding-right: 25px !important;
+    cursor: pointer;
+}
+
+#tblProductos thead th.sorting::before {
+    content: "↕";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    opacity: 0.4;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+}
+
+#tblProductos thead th.sorting_asc::before {
+    content: "▴";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    opacity: 1;
+    color: #0d6efd;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+#tblProductos thead th.sorting_desc::before {
+    content: "▾";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    opacity: 1;
+    color: #0d6efd;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+/* Mejorar la apariencia de los botones de ordenamiento */
+.dataTables_wrapper .dataTables_filter input {
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    padding: 0.375rem 0.75rem;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    padding: 0.375rem 2rem 0.375rem 0.75rem;
+}
+
+/* Estilos para la imagen de preview */
+#img-preview {
+    max-width: 100%;
+    height: auto;
+    border: 2px dashed #dee2e6;
+    border-radius: 0.375rem;
+}
+
+.card-border-primary {
+    border-color: #0d6efd !important;
+}
+
+/* Asegurar que las columnas no ordenables no tengan iconos */
+#tblProductos thead th:not(.sorting):not(.sorting_asc):not(.sorting_desc)::before {
+    display: none !important;
+}
