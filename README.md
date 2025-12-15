@@ -33,31 +33,31 @@ Un sistema completo de punto de venta con conversión automática de moneda entr
 - Activación/Desactivación de marcas
 - Asociación de marcas a productos
 
-### 6. 📦 **Productos**
+### 7. 📦 **Productos**
 - Creación de productos con información completa
 - Modificación de productos existentes
 - Activación/Desactivación de productos
 - **Carga de imágenes** para productos
 
-### 7. ⚙️ **Administración**
-- **7.1. Usuarios**
+### 8. ⚙️ **Administración**
+- **8.1. Usuarios**
   - Creación de usuarios del sistema
   - Modificación de datos de usuario
   - Activación/Desactivación de usuarios
   - Gestión de permisos y roles
   
-- **7.2. Configuración de la Empresa**
+- **8.2. Configuración de la Empresa**
   - Configuración general del negocio
   - **Tasa del día configurable**
   - **Obtener tasa automática por API** (funcionalidad incorporada)
 
-### 8. 🏦 **Cajas**
-- **8.1. Cajas**
+### 9. 🏦 **Cajas**
+- **9.1. Cajas**
   - Creación de cajas registradoras
   - Modificación de cajas
   - Activación/Desactivación de cajas
   
-- **8.2. Cierres de Caja**
+- **9.2. Cierres de Caja**
   - Apertura de caja con monto inicial
   - Cierre de caja con arqueo automático
   - Reportes de cierre diario
