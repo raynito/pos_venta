@@ -12,7 +12,7 @@ class Productos extends Controller{
             if (empty($_SESSION['activo'])) {
                 header("location: " . base_url);
             }
-    
+            $data['marcas'] = $this->model->getMarcas();
             $data['medidas'] = $this->model->getMedidas();
             $data['categorias'] = $this->model->getCategorias();
             $this->views->getView($this, "index", $data);
@@ -102,15 +102,14 @@ class Productos extends Controller{
         if(!empty($verificar) || $id_usuario == 1){
             $codigo = $_POST['codigo'];
             $descripcion = $_POST['descripcion'];
+            $marca = $_POST['marca'];
             $precio_compra = $_POST['precio_compra'];
             $precio_venta = $_POST['precio_venta'];
             $medida = $_POST['medida'];
             $categoria = $_POST['categoria'];
             $id = $_POST['id'];
             $tasa = $_SESSION['tasa'];
-            
-            error_log("[$request_id] ID recibido: '" . $id . "'");
-            
+                        
             if (empty($codigo) || empty($descripcion) || empty($precio_compra) || empty($precio_venta)) {
                 $msg = array('msg' => 'Todos los campos son obligatorios', 'icono' => 'warning');
             } else {
@@ -142,7 +141,7 @@ class Productos extends Controller{
                 if (empty($id) || $id == 0 || $id == "0" || $id == "") {
                     // REGISTRAR NUEVO PRODUCTO
                     error_log("[$request_id] Registrando NUEVO producto...");
-                    $data = $this->model->registrarProducto($codigo, $descripcion, $precio_compra, $precio_venta, $medida, $categoria, $name, $tasa);
+                    $data = $this->model->registrarProducto($codigo, $descripcion, $marca, $precio_compra, $precio_venta, $medida, $categoria, $name, $tasa);
                     if ($data == "ok") {
                         $msg = array('msg' => 'Producto registrado con éxito', 'icono' => 'success');
                         error_log("[$request_id] ✅ Producto NUEVO registrado exitosamente");
@@ -198,7 +197,7 @@ class Productos extends Controller{
                         error_log("[$request_id] Manteniendo imagen actual: " . $img_actual);
                     }
                     
-                    $data = $this->model->modificarProducto($codigo, $descripcion, $precio_compra, $precio_venta, $medida, $categoria, $name, $tasa, $id);
+                    $data = $this->model->modificarProducto($codigo, $descripcion, $marca, $precio_compra, $precio_venta, $medida, $categoria, $name, $tasa, $id);
                     if ($data == "modificado") {
                         $msg = array('msg' => 'Producto modificado con éxito', 'icono' => 'success');
                         error_log("[$request_id] ✅ Producto EXISTENTE modificado exitosamente");

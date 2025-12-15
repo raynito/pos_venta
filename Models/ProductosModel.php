@@ -1,13 +1,13 @@
 <?php
 class ProductosModel extends Query{
-    private $codigo, $descripcion, $precio_compra, $precio_venta, $id_medida, $id_categoria, $id, $estado, $img;
+    private $codigo, $descripcion, $id_marca, $precio_compra, $precio_venta, $id_medida, $id_categoria, $id, $estado, $img;
 	private $precio_compra_bolos, $precio_venta_bolos;
     public function __construct(){
         parent::__construct();
     }
 
     public function getProductos(){
-        $sql = "SELECT p.id, p.foto, p.codigo, p.descripcion, p.precio_venta, p.precio_venta_bolos, p.cantidad, p.estado, m.nombre AS medida, c.nombre AS categoria FROM productos p INNER JOIN medidas m ON m.id = p.id_medida INNER JOIN categorias c ON c.id = p.id_categoria";
+        $sql = "SELECT p.id, p.foto, p.codigo, p.descripcion, ma.nombre AS marca, p.precio_venta, p.precio_venta_bolos, p.cantidad, p.estado, m.nombre AS medida, c.nombre AS categoria FROM productos p INNER JOIN medidas m ON m.id = p.id_medida INNER JOIN categorias c ON c.id = p.id_categoria INNER JOIN marcas ma ON ma.id = p.id_marca";
         $data = $this->selectAll($sql);
         return $data;
     }
@@ -24,9 +24,16 @@ class ProductosModel extends Query{
         return $data;
     }
 
-    public function registrarProducto(string $codigo, string $descripcion, string $precio_compra, string $precio_venta, int $id_medida, int $id_categoria, string $img, string $tasa){
+    public function getMarcas() {
+        $sql = "SELECT * FROM marcas WHERE estado = 1";
+        $data = $this->selectAll($sql);
+        return $data;
+    }
+
+    public function registrarProducto(string $codigo, string $descripcion, int $id_marca, string $precio_compra, string $precio_venta, int $id_medida, int $id_categoria, string $img, string $tasa){
         $this->codigo = $codigo;
         $this->descripcion = $descripcion;
+        $this->id_marca = $id_marca;
         $this->precio_compra = $precio_compra;
         $this->precio_compra_bolos = $precio_compra * $tasa;
         $this->precio_venta = $precio_venta;
@@ -37,8 +44,8 @@ class ProductosModel extends Query{
         $verificar = "SELECT * FROM productos WHERE codigo = '$this->codigo'";
         $existe = $this->select($verificar);
         if (empty($existe)) {
-            $sql = "INSERT INTO productos(codigo, descripcion, precio_compra, precio_compra_bolos, precio_venta, precio_venta_bolos, id_medida, id_categoria, foto) VALUES (?,?,?,?,?,?,?,?,?)";
-            $datos = array($this->codigo, $this->descripcion, $this->precio_compra, $this->precio_compra_bolos, $this->precio_venta, $this->precio_venta_bolos, $this->id_medida, $this->id_categoria, $this->img);
+            $sql = "INSERT INTO productos(codigo, descripcion, id_marca, precio_compra, precio_compra_bolos, precio_venta, precio_venta_bolos, id_medida, id_categoria, foto) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            $datos = array($this->codigo, $this->descripcion, $this->id_marca, $this->precio_compra, $this->precio_compra_bolos, $this->precio_venta, $this->precio_venta_bolos, $this->id_medida, $this->id_categoria, $this->img);
             $data = $this->save($sql, $datos);
             if ($data == 1) {
                 $res = "ok";
@@ -51,9 +58,10 @@ class ProductosModel extends Query{
         return $res;
     }
 
-    public function modificarProducto(string $codigo, string $descripcion, string $precio_compra, string $precio_venta, int $id_medida, int $id_categoria, string $img, string $tasa, int $id){
+    public function modificarProducto(string $codigo, string $descripcion, int $id_marca, string $precio_compra, string $precio_venta, int $id_medida, int $id_categoria, string $img, string $tasa, int $id){
         $this->codigo = $codigo;
         $this->descripcion = $descripcion;
+        $this->id_marca = $id_marca;
         $this->precio_compra = $precio_compra;
         $this->precio_compra_bolos = $precio_compra * $tasa;
         $this->precio_venta = $precio_venta;
@@ -62,8 +70,8 @@ class ProductosModel extends Query{
         $this->id_categoria = $id_categoria;
         $this->img = $img;
         $this->id = $id;
-        $sql = "UPDATE productos SET codigo = ?, descripcion = ?, precio_compra = ?, precio_compra_bolos = ?, precio_venta = ?, precio_venta_bolos = ?, id_medida = ?, id_categoria = ?, foto = ? WHERE id = ?";
-        $datos = array($this->codigo, $this->descripcion, $this->precio_compra, $this->precio_compra_bolos, $this->precio_venta, $this->precio_venta_bolos, $this->id_medida, $this->id_categoria, $this->img ,$this->id);
+        $sql = "UPDATE productos SET codigo = ?, descripcion = ?, id_marca = ?, precio_compra = ?, precio_compra_bolos = ?, precio_venta = ?, precio_venta_bolos = ?, id_medida = ?, id_categoria = ?, foto = ? WHERE id = ?";
+        $datos = array($this->codigo, $this->descripcion, $this->id_marca ,$this->precio_compra, $this->precio_compra_bolos, $this->precio_venta, $this->precio_venta_bolos, $this->id_medida, $this->id_categoria, $this->img ,$this->id);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "modificado";

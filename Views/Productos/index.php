@@ -13,6 +13,7 @@
                         <th>Foto</th>
                         <th>Codigo</th>
                         <th>Descripcion</th>
+                        <th>Marca</th>
                         <th>Precio de Venta</th>
                         <th>Precio de Venta BsD</th>
                         <th>Stock</th>
@@ -59,6 +60,16 @@
                                     <?php } ?>
                                 </select>
                                 <label for="medida">Medida</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-floating mb-3">
+                                <select id="marca" class="form-control" name="marca">
+                                    <?php foreach ($data['marcas'] as $row) { ?>
+                                        <option value="<?php echo $row['id']; ?>"><?php echo $row['nombre']; ?></option>
+                                    <?php } ?>
+                                </select>
+                                <label for="marca">Marca</label>
                             </div>
                         </div>
                         <div class="col-md-4">

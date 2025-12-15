@@ -177,6 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
             {'data': 'imagen'},
             {'data': 'codigo'},
             {'data': 'descripcion'},
+            {'data': 'marca'},
             {'data': 'precio_venta' },
             {'data': 'precio_venta_bolos'},
             {'data': 'cantidad' },
@@ -308,6 +309,7 @@ function frmProducto(id = '') {
                 document.getElementById('id').value = data.id;
                 document.getElementById('codigo').value = data.codigo;
                 document.getElementById('descripcion').value = data.descripcion;
+                document.getElementById('marca').value = data.id_marca;
                 document.getElementById('medida').value = data.id_medida;
                 document.getElementById('precio_compra').value = data.precio_compra;
                 document.getElementById('precio_venta').value = data.precio_venta;
@@ -986,6 +988,7 @@ function registrarPro(e) {
     e.preventDefault();
     const codigo = document.getElementById("codigo");
     const descripcion = document.getElementById("descripcion");
+    const id_marca = document.getElementById("marca");
     const precio_compra = document.getElementById("precio_compra");
     const precio_venta = document.getElementById("precio_venta");
     const id_medida = document.getElementById("medida");
@@ -1000,7 +1003,6 @@ function registrarPro(e) {
         http.send(new FormData(frm));
         http.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                
                 const res = JSON.parse(this.responseText);
                 $("#nuevo_producto").modal("hide");
                 alertas(res.msg, res.icono);
@@ -1022,6 +1024,7 @@ function btnEditarPro(id) {
             document.getElementById("id").value = res.id;
             document.getElementById("codigo").value = res.codigo;
             document.getElementById("descripcion").value = res.descripcion;
+            document.getElementById("marca").value = res.id_marca;
             document.getElementById("precio_compra").value = res.precio_compra;
             document.getElementById("precio_venta").value = res.precio_venta;
             document.getElementById("medida").value = res.id_medida;
