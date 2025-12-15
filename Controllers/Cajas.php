@@ -22,6 +22,14 @@ class Cajas extends Controller{
         $this->views->getView($this, "arqueo");
     }
 
+    public function verificarCajaAbierta(){
+        $id_usuario = $_SESSION['id_usuario'];
+        $data = $this->model->verificarCaja($id_usuario);
+        
+        echo json_encode(['caja_abierta' => !empty($data)], JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
     public function listar(){
         $data = $this->model->getCajas('caja');
         for ($i=0; $i < count($data); $i++) { 

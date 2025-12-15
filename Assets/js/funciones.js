@@ -1,4 +1,4 @@
-let tblUsuarios, tblCajas, tblClientes, tblCategorias, tblMedidas, tblProductos, tblDetalle, tblHistCompras, tblHistVentas, tblArqueo;
+let tblUsuarios, tblCajas, tblClientes, tblCategorias, tblMedidas, tblProductos, tblDetalle, tblHistCompras, tblHistVentas, tblArqueo, tblMarcas;
 document.addEventListener("DOMContentLoaded", function () {
     
     $('#cliente').select2();
@@ -148,6 +148,25 @@ document.addEventListener("DOMContentLoaded", function () {
         buttons
     });//Fin de la tabla Medidas
 
+    tblMarcas = $('#tblMarcas').DataTable({
+        ajax: {
+            url: base_url + "Marcas/listar",
+            dataSrc: ''
+        },
+        columns: [
+            {'data': 'id'},
+            {'data': 'nombre' },
+            {'data': 'nombre_corto'},
+            {'data': 'estado'},
+            {'data': 'acciones'}
+        ],
+        language: {
+            "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+        },
+        dom,
+        buttons
+    });//Fin de la tabla Marcas
+
     tblProductos = $('#tblProductos').DataTable({
         ajax: {
             url: base_url + "Productos/listar",
@@ -233,45 +252,6 @@ document.addEventListener("DOMContentLoaded", function () {
         dom,
         buttons
     });//Fin de la tabla Arqueos
-
-    /*tblProductos = $('#tblProductos').DataTable({
-        "language": {
-            "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
-        },
-        "columnDefs": [
-            { 
-                "targets": [0, 2, 3, 4, 5, 6, 7], // Columnas ordenables: Id, Codigo, Descripcion, Precio Venta, Precio Venta BsD, Stock, Estado
-                "orderable": true 
-            },
-            { 
-                "targets": [1, 8], // Columnas NO ordenables: Foto y Acciones
-                "orderable": false 
-            }
-        ],
-        "order": [[0, "desc"]], // Ordenar por ID descendente por defecto
-        "responsive": true,
-        "autoWidth": false,
-        "dom": '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-        "initComplete": function(settings, json) {
-            // Forzar la actualización de los estilos después de la inicialización
-            setTimeout(function() {
-                $('th.sorting, th.sorting_asc, th.sorting_desc').css({
-                    'position': 'relative',
-                    'padding-right': '25px'
-                });
-            }, 100);
-        }
-    });
-
-    // Observar cambios en el ordenamiento para actualizar iconos
-    $('#tblProductos').on('order.dt', function() {
-        setTimeout(function() {
-            $('th.sorting, th.sorting_asc, th.sorting_desc').css({
-                'position': 'relative',
-                'padding-right': '25px'
-            });
-        }, 50);
-    });*/
 })
 
 function preview(event) {
@@ -355,13 +335,11 @@ function frmProducto(id = '') {
     var modal = new bootstrap.Modal(document.getElementById('nuevo_producto'));
     modal.show();
 }
-
 function registrarPro(event) {
     event.preventDefault();
     // Aquí va tu lógica para registrar el producto
     console.log('Registrando producto...');
 }
-
 function frmCambiarPass(e) {
     e.preventDefault();
     const actual = document.getElementById("clave_actual").value;
@@ -391,7 +369,6 @@ function frmCambiarPass(e) {
         }
     }
 }
-
 function frmUsuario() {
     document.getElementById("title").textContent = "Nuevo Usuario";
     document.getElementById("btnAccion").textContent = "Registrar";
@@ -895,7 +872,107 @@ function btnReingresarMed(id) {
         }
     })
 }
-//Fin Categorias
+//Fin Medidas
+
+function frmMarca() {
+    document.getElementById("title").textContent = "Nueva Marca";
+    document.getElementById("btnAccion").textContent = "Registrar";
+    document.getElementById("frmMarca").reset();
+    $('#nuevo_marca').modal('show');
+    document.getElementById("id").value = "";
+}
+function registrarMar(e) {
+    e.preventDefault();
+    const nombre = document.getElementById("nombre");
+    const nombre_corto = document.getElementById("nombre_corto");
+    if (nombre.value == "" || nombre_corto.value == "") {
+        alertas('Todos los campos son obligatorios', 'warning');
+    } else {
+        const url = base_url + "Marcas/registrar";
+        const frm = document.getElementById("frmMarca");
+        const http = new XMLHttpRequest();
+        http.open("POST", url, true);
+        http.send(new FormData(frm));
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                const res = JSON.parse(this.responseText);
+                $("#nuevo_marca").modal("hide");
+                alertas(res.msg, res.icono);
+                tblMarcas.ajax.reload();
+            }
+        }
+    }
+}
+function btnEditarMar(id) {
+    document.getElementById("title").innerHTML = "Actualizar Marca";
+    document.getElementById("btnAccion").innerHTML = "Modificar";
+    const url = base_url + "Marcas/editar/"+id;
+    const http = new XMLHttpRequest();
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            document.getElementById("id").value = res.id;
+            document.getElementById("nombre").value = res.nombre;
+            document.getElementById("nombre_corto").value = res.nombre_corto;
+            $('#nuevo_marca').modal('show');
+        }
+    }
+}
+function btnEliminarMar(id) {
+    Swal.fire({
+        title: 'Esta seguro?',
+        text: "La Marca sera Inactivada!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si!',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url = base_url + "Marcas/eliminar/" + id;
+            const http = new XMLHttpRequest();
+            http.open("GET", url, true);
+            http.send();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const res = JSON.parse(this.responseText);
+                    alertas(res.msg, res.icono);
+                    tblMarcas.ajax.reload();
+                }
+            }
+            
+        }
+    })
+}
+function btnReingresarMar(id) {
+    Swal.fire({
+        title: 'Esta seguro de Reactivar?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si!',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url = base_url + "Marcas/reingresar/" + id;
+            const http = new XMLHttpRequest();
+            http.open("GET", url, true);
+            http.send();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const res = JSON.parse(this.responseText);
+                    tblMarcas.ajax.reload();
+                    alertas(res.msg, res.icono);
+                }
+            }
+        }
+    })
+}
+//Fin Marcas
 
 function frmProducto() {
     document.getElementById("title").textContent = "Nuevo Producto";
@@ -1517,10 +1594,10 @@ function cerrarCaja() {
         if (this.readyState == 4 && this.status == 200) {
             const res = JSON.parse(this.responseText);
             const id = res.montos_iniciales.id;
-            const total_ventas = res.totales.total_ventas;
-            const monto_final = res.totales.monto_total;
-            const monto_inicial = res.montos_iniciales.monto_inicial;
-            const monto_total = res.montos_totales;
+            const total_ventas = res.totales?.total_ventas || 0;
+            const monto_final = res.totales?.monto_total || 0;
+            const monto_inicial = res.montos_iniciales.monto_inicial || 0;
+            const monto_total = res.montos_totales || 0;
             document.getElementById("monto_inicial").value = monto_inicial;
             document.getElementById("total_ventas").value = total_ventas;
             document.getElementById("monto_final").value = monto_final;
@@ -1531,6 +1608,39 @@ function cerrarCaja() {
             $('#aperturarCaja').modal('show');
         }   
     }
+}
+
+function verificarEstadoCaja() {
+    console.log('Verificando estado de caja...');
+    fetch(base_url + 'Cajas/verificarCajaAbierta')
+        .then(response => response.json())
+        .then(data => {
+            const btnCierre = document.getElementById('btnCierre');
+            const btnApertura = document.getElementById('btnApertura');
+            
+            if (data.caja_abierta) {
+                // Si hay caja abierta
+                btnCierre.disabled = false;
+                btnCierre.classList.remove('btn-secondary');
+                btnCierre.classList.add('btn-danger');
+                
+                btnApertura.disabled = true;
+                btnApertura.classList.remove('btn-success');
+                btnApertura.classList.add('btn-secondary');
+            } else {
+                // Si no hay caja abierta
+                btnCierre.disabled = true;
+                btnCierre.classList.remove('btn-danger');
+                btnCierre.classList.add('btn-secondary');
+                
+                btnApertura.disabled = false;
+                btnApertura.classList.remove('btn-secondary');
+                btnApertura.classList.add('btn-success');
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar estado de caja:', error);
+        });
 }
 
 function salir() {

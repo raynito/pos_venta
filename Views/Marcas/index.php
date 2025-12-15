@@ -3,22 +3,22 @@
 <!-- CSS específico para los iconos de ordenamiento -->
 <style>
 /* Reset completo para los iconos de DataTables */
-#tblMedidas thead th.sorting:after,
-#tblMedidas thead th.sorting_asc:after,
-#tblMedidas thead th.sorting_desc:after {
+#tblMarcas thead th.sorting:after,
+#tblMarcas thead th.sorting_asc:after,
+#tblMarcas thead th.sorting_desc:after {
     display: none !important;
     opacity: 0 !important;
     content: '' !important;
 }
 
 /* Iconos de ordenamiento personalizados */
-#tblMedidas thead th {
+#tblMarcas thead th {
     position: relative;
     padding-right: 25px !important;
     cursor: pointer;
 }
 
-#tblMedidas thead th.sorting::before {
+#tblMarcas thead th.sorting::before {
     content: "↕";
     position: absolute;
     right: 8px;
@@ -30,7 +30,7 @@
     font-family: Arial, sans-serif;
 }
 
-#tblMedidas thead th.sorting_asc::before {
+#tblMarcas thead th.sorting_asc::before {
     content: "▴";
     position: absolute;
     right: 8px;
@@ -43,7 +43,7 @@
     font-family: Arial, sans-serif;
 }
 
-#tblMedidas thead th.sorting_desc::before {
+#tblMarcas thead th.sorting_desc::before {
     content: "▾";
     position: absolute;
     right: 8px;
@@ -57,7 +57,7 @@
 }
 
 /* Asegurar que las columnas no ordenables no tengan iconos */
-#tblMedidas thead th:not(.sorting):not(.sorting_asc):not(.sorting_desc)::before {
+#tblMarcas thead th:not(.sorting):not(.sorting_asc):not(.sorting_desc)::before {
     display: none !important;
 }
 
@@ -84,14 +84,14 @@
 
 <div class="card mt-4">
     <div class="card-header card-header-primary fw-bold">
-        Unidades de Medidas
+        Maestro de Marcas
     </div>
     <div class="card-body">
-        <button class="btn btn-primary mb-2" type="button" onclick="frmMedida();">
-            <i class="fas fa-plus me-1"></i> Nueva Medida
+        <button class="btn btn-primary mb-2" type="button" onclick="frmMarca();">
+            <i class="fas fa-plus me-1"></i> Nueva Marca
         </button>
         <div class="table-responsive">
-            <table class="table table-light table-bordered table-hover" id="tblMedidas">
+            <table class="table table-light table-bordered table-hover" id="tblMarcas">
                 <thead class="thead-dark">
                     <tr>
                         <th>Id</th>
@@ -109,20 +109,20 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="nuevo_medida" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="nuevo_marca" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
                 <h5 class="modal-title" id="title">
-                    <i class="fas fa-ruler me-2"></i><span id="title-text">Nueva Medida</span>
+                    <i class="fas fa-ruler me-2"></i><span id="title-text">Nueva Marca</span>
                 </h5>
                 <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="frmMedida">
+                <form id="frmMarca">
                     <div class="form-floating mb-3">
                         <input type="hidden" id="id" name="id">
-                        <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre de la Medida">
+                        <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre de la Marca">
                         <label for="nombre">Nombre</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -130,7 +130,7 @@
                         <label for="nombre_corto">Nombre Corto</label>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" type="button" onclick="registrarMed(event);" id="btnAccion">
+                        <button class="btn btn-primary" type="button" onclick="registrarMar(event);" id="btnAccion">
                             <i class="fas fa-save me-1"></i> <span id="btn-text">Registrar</span>
                         </button>
                         <button class="btn btn-danger" type="button" data-bs-dismiss="modal">
@@ -143,34 +143,33 @@
     </div>
 </div>
 
-<!-- Script para inicializar DataTable -->
 <script>
-function frmMedida(id = '') {
+function frmMarca(id = '') {
     // Limpiar formulario
-    document.getElementById('frmMedida').reset();
+    document.getElementById('frmMarca').reset();
     document.getElementById('id').value = '';
     
     if (id) {
         // Modo edición
-        document.getElementById('title-text').textContent = 'Editar Medida';
+        document.getElementById('title-text').textContent = 'Editar Marca';
         document.getElementById('btn-text').textContent = 'Actualizar';
-        // Aquí iría la lógica para cargar los datos de la medida
-        // cargarDatosMedida(id);
+        // Aquí iría la lógica para cargar los datos de la marca
+        // cargarDatosMarca(id);
     } else {
         // Modo nuevo
-        document.getElementById('title-text').textContent = 'Nueva Medida';
+        document.getElementById('title-text').textContent = 'Nueva Marca';
         document.getElementById('btn-text').textContent = 'Registrar';
     }
     
     // Mostrar modal
-    var modal = new bootstrap.Modal(document.getElementById('nuevo_medida'));
+    var modal = new bootstrap.Modal(document.getElementById('nuevo_marca'));
     modal.show();
 }
 
-function registrarMed(event) {
+function registrarMar(event) {
     event.preventDefault();
-    // Aquí va tu lógica para registrar la medida
-    console.log('Registrando medida...');
+    // Aquí va tu lógica para registrar la marca
+    console.log('Registrando marca...');
     
     // Ejemplo básico de validación
     const nombre = document.getElementById('nombre').value;
@@ -186,25 +185,6 @@ function registrarMed(event) {
         alert('El nombre corto no debe exceder los 10 caracteres');
         return;
     }
-    
-    // Aquí iría tu llamada AJAX para guardar la medida
-    /*
-    $.post('<?php echo base_url; ?>Medidas/registrar', 
-        $('#frmMedida').serialize(), 
-        function(data) {
-            if (data.estado) {
-                // Recargar la tabla
-                $('#tblMedidas').DataTable().ajax.reload();
-                // Cerrar modal
-                bootstrap.Modal.getInstance(document.getElementById('nuevo_medida')).hide();
-                // Mostrar mensaje de éxito
-                alert('Medida guardada correctamente');
-            } else {
-                alert('Error al guardar la medida');
-            }
-        }
-    );
-    */
 }
 
 // Función para formatear el nombre corto (solo mayúsculas)

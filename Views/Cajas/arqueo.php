@@ -4,8 +4,8 @@
         Arqueo de Caja
     </div>
     <div class="card-body">
-    <button class="btn btn-success mb-2" type="button" onclick="arqueoCaja();"><i class="fas fa-unlock"></i>&nbsp;&nbsp; Apertura</button>
-    <button class="btn btn-danger mb-2" type="button" onclick="cerrarCaja();"><i class="fas fa-lock"></i>&nbsp;&nbsp; Cierre</button>
+    <button class="btn btn-success mb-2" type="button" id="btnApertura"onclick="arqueoCaja();"><i class="fas fa-unlock"></i>&nbsp;&nbsp; Apertura</button>
+    <button class="btn btn-danger mb-2" type="button" id="btnCierre" onclick="cerrarCaja();" disabled><i class="fas fa-lock"></i>&nbsp;&nbsp; Cierre</button>
     <div class="table-responsive">
         <table class="table table-light" id="tblArqueo">
             <thead class="thead-dark">
@@ -65,4 +65,36 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM cargado, inicializando verificación de caja...');
+    
+    // Esperar un momento para asegurar que todas las funciones estén cargadas
+    setTimeout(function() {
+        // Verificar si la función existe
+        if (typeof verificarEstadoCaja === 'function') {
+            console.log('Función verificarEstadoCaja encontrada');
+            verificarEstadoCaja();
+            
+            // Verificar cada 60 segundos
+            setInterval(verificarEstadoCaja, 60000);
+        } else {
+            console.error('Función verificarEstadoCaja NO encontrada');
+            // Intentar definir una versión local como fallback
+            definirFuncionLocal();
+        }
+    }, 500);
+    
+    // También verificar después de cerrar el modal
+    const modalElement = document.getElementById('aperturarCaja');
+    if (modalElement) {
+        modalElement.addEventListener('hidden.bs.modal', function () {
+            console.log('Modal cerrado, verificando estado de caja...');
+            if (typeof verificarEstadoCaja === 'function') {
+                setTimeout(verificarEstadoCaja, 500);
+            }
+        });
+    }
+});
+</script>
 <?php include "Views/Templates/footer.php"; ?>

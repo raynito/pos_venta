@@ -17,6 +17,11 @@ class CajasModel extends Query{
         return $data;
     }
 
+    public function verificarCaja(int $id_usuario){
+        $sql = "SELECT estado FROM cierre_caja WHERE id_usuario = $id_usuario AND estado = 1";
+        return $this->select($sql);
+    }
+
     public function registrarCaja(string $caja){
         $this->caja = $caja;
         $verficar = "SELECT * FROM caja WHERE caja = '$this->caja'";
@@ -86,19 +91,15 @@ class CajasModel extends Query{
 
 		// En tu modelo
 	public function getVentas($id_usuario) {
-		// Tu consulta actual...
-		// Si no hay resultados, retorna array vacío en lugar de false
-		$query = $this->db->query("TU CONSULTA...");
-		$result = $query->row_array();
-		return $result ?: ['monto_total' => 0, 'monto_total_bolos' => 0, 'total_ventas' => 0];
+		$sql = "SELECT COUNT(total) AS total_ventas, SUM(total) AS monto_total, SUM(total_bolos) AS monto_total_bolos FROM ventas WHERE id_usuario = $id_usuario AND estado = 1 AND apertura = 1";
+        $data = $this->select($sql);
+		return $data ?: ['monto_total' => 0, 'monto_total_bolos' => 0, 'total_ventas' => 0];
 	}
 
 	public function getMontoInicial($id_usuario) {
-		// Tu consulta actual...
-		// Si no hay resultados, retorna array vacío en lugar de false
-		$query = $this->db->query("TU CONSULTA...");
-		$result = $query->row_array();
-		return $result ?: ['monto_inicial' => 0, 'monto_inicial_bolos' => 0, 'id' => 0];
+		$sql = "SELECT id, monto_inicial, monto_inicial_bolos FROM cierre_caja WHERE id_usuario = $id_usuario AND estado = 1";
+        $data = $this->select($sql);
+		return $data ?: ['monto_inicial' => 0, 'monto_inicial_bolos' => 0, 'id' => 0];
 	}
 
     public function actualizarArqueo(string $monto_final, string $monto_final_bolos, string $fecha_cierre, int $total_ventas, string $monto_total, string $monto_total_bolos, int $id){

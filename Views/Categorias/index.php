@@ -123,48 +123,6 @@
 
 <!-- Script para inicializar DataTable -->
 <script>
-$(document).ready(function() {
-    // Inicializar DataTable con configuración para los botones de ordenamiento
-    $('#tblCategorias').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-        },
-        "columnDefs": [
-            { 
-                "targets": [0, 1, 2], // Columnas ordenables: Id, Nombre, Estado
-                "orderable": true 
-            },
-            { 
-                "targets": [3], // Columna NO ordenable: Acciones
-                "orderable": false 
-            }
-        ],
-        "order": [[0, "desc"]], // Ordenar por ID descendente por defecto
-        "responsive": true,
-        "autoWidth": false,
-        "dom": '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-        "initComplete": function(settings, json) {
-            // Forzar la actualización de los estilos después de la inicialización
-            setTimeout(function() {
-                $('th.sorting, th.sorting_asc, th.sorting_desc').css({
-                    'position': 'relative',
-                    'padding-right': '25px'
-                });
-            }, 100);
-        }
-    });
-
-    // Observar cambios en el ordenamiento para actualizar iconos
-    $('#tblCategorias').on('order.dt', function() {
-        setTimeout(function() {
-            $('th.sorting, th.sorting_asc, th.sorting_desc').css({
-                'position': 'relative',
-                'padding-right': '25px'
-            });
-        }, 50);
-    });
-});
-
 function frmCategoria(id = '') {
     // Limpiar formulario
     document.getElementById('frmCategoria').reset();

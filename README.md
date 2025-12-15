@@ -27,6 +27,12 @@ Un sistema completo de punto de venta con conversión automática de moneda entr
 - Modificación de medidas
 - Activación/Desactivación de medidas
 
+### 6. 🏷️ **Marcas**
+- Creación y configuración de marcas
+- Modificación de información de marcas
+- Activación/Desactivación de marcas
+- Asociación de marcas a productos
+
 ### 6. 📦 **Productos**
 - Creación de productos con información completa
 - Modificación de productos existentes

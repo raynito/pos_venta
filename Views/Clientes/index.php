@@ -152,50 +152,7 @@
     </div>
 </div>
 
-<!-- Script para inicializar DataTable -->
 <script>
-$(document).ready(function() {
-    // Inicializar DataTable con configuración para los botones de ordenamiento
-    $('#tblClientes').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-        },
-        "columnDefs": [
-            { 
-                "targets": [0, 1, 2, 3, 4, 5], // Columnas ordenables: Id, RIF, Nombre, Telefono, Direccion, Estado
-                "orderable": true 
-            },
-            { 
-                "targets": [6], // Columna NO ordenable: Acciones
-                "orderable": false 
-            }
-        ],
-        "order": [[0, "desc"]], // Ordenar por ID descendente por defecto
-        "responsive": true,
-        "autoWidth": false,
-        "dom": '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-        "initComplete": function(settings, json) {
-            // Forzar la actualización de los estilos después de la inicialización
-            setTimeout(function() {
-                $('th.sorting, th.sorting_asc, th.sorting_desc').css({
-                    'position': 'relative',
-                    'padding-right': '25px'
-                });
-            }, 100);
-        }
-    });
-
-    // Observar cambios en el ordenamiento para actualizar iconos
-    $('#tblClientes').on('order.dt', function() {
-        setTimeout(function() {
-            $('th.sorting, th.sorting_asc, th.sorting_desc').css({
-                'position': 'relative',
-                'padding-right': '25px'
-            });
-        }, 50);
-    });
-});
-
 function frmCliente(id = '') {
     // Limpiar formulario
     document.getElementById('frmCliente').reset();
@@ -231,25 +188,6 @@ function registrarCli(event) {
         alert('El RIF y el nombre son obligatorios');
         return;
     }
-    
-    // Aquí iría tu llamada AJAX para guardar el cliente
-    /*
-    $.post('<?php echo base_url; ?>Clientes/registrar', 
-        $('#frmCliente').serialize(), 
-        function(data) {
-            if (data.estado) {
-                // Recargar la tabla
-                $('#tblClientes').DataTable().ajax.reload();
-                // Cerrar modal
-                bootstrap.Modal.getInstance(document.getElementById('nuevo_cliente')).hide();
-                // Mostrar mensaje de éxito
-                alert('Cliente guardado correctamente');
-            } else {
-                alert('Error al guardar el cliente');
-            }
-        }
-    );
-    */
 }
 
 // Función para formatear el RIF mientras se escribe

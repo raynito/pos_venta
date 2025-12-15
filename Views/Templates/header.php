@@ -81,6 +81,10 @@
                                 <div class="sb-nav-link-icon"><i class="fa solid fa-ruler fa-2x text-success"></i></div>
                                 Medidas
                             </a>
+                            <a class="nav-link" href="<?php echo base_url; ?>Marcas">
+                                <div class="sb-nav-link-icon"><i class="fas solid fa-wrench fa-2x text-success"></i></div>
+                                Marcas
+                            </a>
                             <a class="nav-link" href="<?php echo base_url; ?>Productos">
                                 <div class="sb-nav-link-icon"><i class="fa solid fa-store fa-2x text-success"></i></div>
                                 Productos
