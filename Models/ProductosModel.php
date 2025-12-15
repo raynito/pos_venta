@@ -84,6 +84,7 @@ class ProductosModel extends Query{
     public function editarPro(int $id){
         $sql = "SELECT * FROM productos WHERE id = $id";
         $data = $this->select($sql);
+        console.log($data);
         return $data;
     }
 

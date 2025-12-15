@@ -42,12 +42,13 @@
             $nombre = $_POST['nombre'];
             $rif = $_POST['rif'];
             $telefono = $_POST['telefono'];
+            $impuesto = $_POST['impuesto'];
             $direccion = $_POST['direccion'];
             $mensaje = $_POST['mensaje'];
             $id = $_POST['id'];
             $tasa = $_POST['tasa'];
             $tasa_bcv = $_POST['tasa_bcv'];
-            $data = $this->model->modificarEmpresa($nombre, $rif, $telefono, $direccion, $mensaje, $id, $tasa, $tasa_bcv);
+            $data = $this->model->modificarEmpresa($nombre, $rif, $telefono, $impuesto, $direccion, $mensaje, $id, $tasa, $tasa_bcv);
             if ($data == 'ok') {
                 $msg = array('msg' => 'Los Datos fueron Modificados', 'icono' => 'success');
             } else {

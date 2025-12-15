@@ -13,10 +13,16 @@
                     <label for="nombre">Nombre de la Empresa</label>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="form-floating mb-3">
                     <input type="text" name="rif" id="rif" class="form-control" placeholder="rif" value="<?php echo $data['empresa']['rif']; ?>">
                     <label for="rif">R.I.F</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-floating mb-3">
+                    <input type="number" name="impuesto" id="impuesto" class="form-control" placeholder="Impuesto" value="<?php echo $data['empresa']['impuesto']; ?>" step="0.01" min="0" max="100">
+                    <label for="impuesto">Impuesto (%)</label>
                 </div>
             </div>
             <div class="col-md-6">
@@ -67,7 +73,7 @@
                         <!-- Botones de acción -->
                         <div class="btn-group-custom mt-3">
                             <button type="button" class="btn btn-success" id="btnActualizarTasas" onclick="actualizarTasasAutomatically()">
-                                <i class="fas fa-sync-alt me-1"></i> Actualizar Tasas Automáticamente
+                                <i class="fas fa-sync-alt me-1"></i> Actualizar Tasa
                             </button>
                             <button type="button" class="btn btn-primary btn-disabled" id="btnModificarEmpresa" onclick="modificarEmpresa()" disabled>
                                 <i class="fas fa-save me-1"></i> Guardar Cambios
@@ -89,6 +95,7 @@
 let valoresOriginales = {
     nombre: '<?php echo $data['empresa']['nombre']; ?>',
     rif: '<?php echo $data['empresa']['rif']; ?>',
+    impuesto: '<?php echo $data['empresa']['impuesto']; ?>',
     telefono: '<?php echo $data['empresa']['telefono']; ?>',
     direccion: '<?php echo $data['empresa']['direccion']; ?>',
     tasa: '<?php echo $data['tasa']['factor']; ?>',
@@ -132,7 +139,7 @@ function verificarCambios() {
     let hayCambios = false;
     
     // Verificar cada campo
-    const campos = ['nombre', 'rif', 'telefono', 'direccion', 'tasa', 'tasa_bcv', 'mensaje'];
+    const campos = ['nombre', 'rif', 'impuesto', 'telefono', 'direccion', 'tasa', 'tasa_bcv', 'mensaje'];
     
     campos.forEach(campo => {
         const elemento = document.getElementById(campo);
@@ -267,39 +274,6 @@ function modificarEmpresa() {
     btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Guardando...';
     btnGuardar.disabled = true;
     
-    // Aquí iría tu llamada AJAX para guardar los datos
-    /*
-    fetch('<?php echo base_url; ?>Administracion/actualizar', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Mostrar mensaje de éxito
-            mostrarMensajeTemporal('Datos actualizados correctamente', 'success', 1000);
-            
-            // Actualizar los valores originales con los nuevos valores
-            actualizarValoresOriginales();
-            
-            // Actualizar la información mostrada
-            document.getElementById('tasa-bcv-info').textContent = `Valor guardado: ${document.getElementById('tasa_bcv').value} BsD/$`;
-            document.getElementById('tasa-info').textContent = `Valor guardado: ${document.getElementById('tasa').value} BsD/$`;
-            
-        } else {
-            mostrarMensajeTemporal('Error al guardar los datos', 'danger', 1000);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        mostrarMensajeTemporal('Error de conexión', 'danger', 1000);
-    })
-    .finally(() => {
-        btnGuardar.innerHTML = textoOriginal;
-        verificarCambios();
-    });
-    */
-    
     // Simulación de guardado exitoso (eliminar esto cuando implementes la lógica real)
     setTimeout(() => {
         // Actualizar los valores originales
@@ -324,6 +298,7 @@ function actualizarValoresOriginales() {
     valoresOriginales = {
         nombre: document.getElementById('nombre').value,
         rif: document.getElementById('rif').value,
+        impuesto: document.getElementById('impuesto').value,
         telefono: document.getElementById('telefono').value,
         direccion: document.getElementById('direccion').value,
         tasa: document.getElementById('tasa').value,
@@ -332,7 +307,7 @@ function actualizarValoresOriginales() {
     };
     
     // Remover estilos de campos cambiados
-    const campos = ['nombre', 'rif', 'telefono', 'direccion', 'tasa', 'tasa_bcv', 'mensaje'];
+    const campos = ['nombre', 'rif', 'impuesto', 'telefono', 'direccion', 'tasa', 'tasa_bcv', 'mensaje'];
     campos.forEach(campo => {
         const elemento = document.getElementById(campo);
         if (elemento) {
@@ -375,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (tasaBcvInput) validarNumero(tasaBcvInput);
     
     // Agregar event listeners para verificar cambios en todos los campos
-    const campos = ['nombre', 'rif', 'telefono', 'direccion', 'tasa', 'tasa_bcv', 'mensaje'];
+    const campos = ['nombre', 'rif', 'impuesto', 'telefono', 'direccion', 'tasa', 'tasa_bcv', 'mensaje'];
     campos.forEach(campo => {
         const elemento = document.getElementById(campo);
         if (elemento) {

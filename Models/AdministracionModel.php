@@ -10,9 +10,9 @@ class AdministracionModel extends Query{
         return $data;
     }
 
-    public function modificarEmpresa(string $nombre, string $rif, string $telefono, string $direccion, string $mensaje, int $id, string $tasa, string $tasa_bcv) {
-        $sql = "UPDATE configuracion SET nombre = ?, rif = ?, telefono = ?, direccion = ?, mensaje = ? WHERE id = ?";
-        $datos = array($nombre, $rif, $telefono, $direccion, $mensaje, $id);
+    public function modificarEmpresa(string $nombre, string $rif, string $telefono, int $impuesto, string $direccion, string $mensaje, int $id, string $tasa, string $tasa_bcv) {
+        $sql = "UPDATE configuracion SET nombre = ?, rif = ?, telefono = ?, impuesto = ?, direccion = ?, mensaje = ? WHERE id = ?";
+        $datos = array($nombre, $rif, $telefono, $impuesto, $direccion, $mensaje, $id);
         $data = $this->save($sql, $datos);
         if($data == 1) {
             $tasas = $this->getTasa();

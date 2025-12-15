@@ -1012,6 +1012,7 @@ function registrarPro(e) {
     }
 }
 function btnEditarPro(id) {
+    const impuesto = obtenerImpuesto();
     document.getElementById("title").innerHTML = "Actualizar Producto";
     document.getElementById("btnAccion").innerHTML = "Modificar";
     const url = base_url + "Productos/editar/"+id;
@@ -1026,6 +1027,8 @@ function btnEditarPro(id) {
             document.getElementById("descripcion").value = res.descripcion;
             document.getElementById("marca").value = res.id_marca;
             document.getElementById("precio_compra").value = res.precio_compra;
+            document.getElementById("precio_compra_bolos").value = res.precio_compra_bolos;
+            document.getElementById("precio_venta_bolos").value = res.precio_venta_bolos;
             document.getElementById("precio_venta").value = res.precio_venta;
             document.getElementById("medida").value = res.id_medida;
             document.getElementById("categoria").value = res.id_categoria;
@@ -1306,14 +1309,26 @@ function buscarCodigoVentas(e) {
     //} Fin TODO
 }
 
+function obtenerImpuesto() {
+    try {
+        const response = fetch(base_url + "Administracion/getEmpresa");
+        const data = response.json();
+        return parseFloat(data.impuesto) || 16;
+    } catch (error) {
+        console.error('Error obteniendo impuesto:', error);
+        return 16; // Valor por defecto
+    }
+}
+
 function calcularPrecioVenta(e) {
     e.preventDefault();
     if (document.getElementById("codigo").value != '') {
+        const impuesto = obtenerImpuesto();
         const cantidad = document.getElementById("cantidad").value;
         const precio = document.getElementById("precio").value;
-        const precio_bolos = document.getElementById("precio_bolos").value;
+        const precio_bolos = document.getElementById("precio_bolos").value/(1 + (impuesto / 100));
         document.getElementById("sub_total").value = cantidad * precio;
-        document.getElementById("sub_total_bolos").value = cantidad * precio_bolos;
+        document.getElementById("sub_total_bolos").value = (cantidad * precio_bolos)/(1 + (impuesto / 100));
         if (e.which == 13) {
             if (cantidad > 0) {
                 const url = base_url + "Ventas/ingresar";
